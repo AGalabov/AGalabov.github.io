@@ -1,8 +1,8 @@
-This year I decided to take on the [Advent of Code](https://adventofcode.com/) challenge along with some of my colleagues and it took me only a day to take on an interesting challenge of my own.
+This year I decided to take on the [Advent of Code](https://adventofcode.com/) challenge along with some of my colleagues and it took me only a day to take on an interesting challenge of my own. You can look at my progress here: [AGalabov/advent-of-code-2021](https://github.com/AGalabov/advent-of-code-2021)
 
 # About the problem
 
-Advent of Code is an yearly challenge counting down the days until Christmas. Every day participants are given two "puzzles" to solve. You only need to get to the right solution, so you are free to use any language, framework or technology. I decide that since this is my first go at the challenge, I'd stick to what I know best - Typescript and occasionally C++.
+Advent of Code is an yearly challenge counting down the days until Christmas. Every day participants are given two "puzzles" to solve. You only need to get to the right solution, so you are free to use any language, framework or technology. I decide that since this is my first go at the challenge, I'd stick to what I know best - _Typescript_ and occasionally _C++_.
 
 ## Day 1, puzzle 1
 
@@ -28,15 +28,15 @@ Then I went on and solved the other puzzle for the day and that was that. Or so 
 
 ## Typescript's Typesystem
 
-The day after me and a colleague started discussing the event. He mentioned that knowing Typescript is in fact Turing compete it is fully possible to solve this issue using the typesystem only. At first I was confused, but then he explained his approach to me, but also that he didn't manage to finish it because of the depth limit TS enforces (as of TS 4.3 it is 50). So that's when I decided it's game time!
+The day after me and a colleague started discussing the event. He mentioned that knowing _Typescript_ is in fact _Turing compete_ it is fully possible to solve this issue using the typesystem only. At first I was confused, but then he explained his approach to me, but also that he didn't manage to finish it because of the depth limit TS enforces (as of TS 4.3 it is 50). So that's when I decided it's game time!
 
 # The solution
 
 ## What I wanted to achieve
 
-When it comes to coding something that you are not completely sure how to implement I find it easier if you start with the interface.
+When it comes to coding something that you are not completely sure how to implement, I find it easier if you start with the interface. So I ask myself
 
-"What I want to achieve":
+> "What I want to achieve?"
 
 ```ts
 type Sample = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
@@ -46,7 +46,7 @@ type Solution = NumberOfIncreases<Sample>; // Solution should be of the type 7 (
 
 ## Building blocks
 
-To start with we need a type representation of a number that would allow me to do simple arithmetics. Looking at the possible types that Typescript provides, we have simple values (`boolean`, `number`) that just won't make it - we cannot expand them. We need something that keep multiple values (like an array) but makes a difference between having 2,3 or 10 values. Enter tuples!
+To start with we need a type representation of a number that would allow me to do simple arithmetics. Looking at the possible types that _Typescript_ provides, we have simple values (`boolean`, `number`) that just won't make it - we cannot expand them. We need something that keep multiple values (like an array) but makes a difference between having 2,3 or 10 values. Enter tuples!
 
 A tuple is essentially an array but one of a definite size, where elements at particular positions have to be of a definite type. For example `type StringAndNumber = [string, number];` defines a type. Any variables of the type need to be an array of exactly 2 elements, first of which being a string, and the second - a number.
 
@@ -116,7 +116,7 @@ type Five = Length<BuildTuple<5>>>; // Five is actually of type 5.
 
 ### Limitations
 
-As I already mentioned there are recursion depth limitation when it comes to Typescript:
+As I already mentioned there are recursion depth limitation when it comes to _Typescript_:
 
 ```ts
 type UnderLimit = BuildTuple<46>; // this would be infered correctly
@@ -173,7 +173,7 @@ What we do here is the following:
 1. Given a number `N` we create a tuple from it using `BuildTuple` and save it as `T`
 2. We check if `T` is `Zero` and if so we return `Length<Zero>` (which is 0)
 3. If not then, we check if `T` can be represented as a single type `any` and some values `Rest`
-4. If we can, then `Lenth<Rest>` is the result of the subtraction (we have removed one element)
+4. If we can, then `Length<Rest>` is the result of the subtraction (we have removed one element)
 5. If not - then we have a `0`
 
 As a result we have:
@@ -221,7 +221,7 @@ Let's go line by line:
 4. If `A` isn't, then `A` is greater than `B` and we return `true`
 5. If `B` is not `Zero` then we recursively call `GreaterThan` subtracting one from both `A` and `B`
 
-The results is as expeced:
+The results is as expected:
 
 ```ts
 type Greater = GreaterThan<5, 3>; // Greater is of type true
@@ -275,7 +275,7 @@ type NumberOfIncreases<
   : Accumulator;
 ```
 
-This is a very good example how actual logic can be written with types, hence why Typescript is Turing complete.
+This is a very good example how actual logic can be written with types.
 
 And now after all of this we get to the moment of truth. Let's test it out? Are you excited? Let's go:
 
@@ -301,9 +301,9 @@ So the "algorithm" actually works just fine!
 
 We did manage to implement an algorithm that uses types only to solve an Advent of Code level puzzle.
 
-> Is it useful? - **No!**
-> Is it something that you need to do in your life? - **Probably no!**
-> Was it fun? - **For me, yes!**
+> Is it useful? - **No!**\
+> Is it something that you need to do in your life? - **Probably no!**\
+> Was it fun? - **For me, yes!**\
 > Was it worth it? - **YES!**
 
 ## Takeaway points
