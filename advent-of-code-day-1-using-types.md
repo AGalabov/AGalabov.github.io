@@ -68,9 +68,9 @@ type Length<T extends any[]> = T extends { length: infer L }
 
 What that code does is as simple as:
 
-- Check if the provided type `T` has a property `length`
-- If it does and it is a `number` - return it (`L`)
-- If not - return the length of an empty array (or by transition - `0`)
+1. Check if the provided type `T` has a property `length`
+2. If it does and it is a `number` - return it (`L`)
+3. If not - return the length of an empty array (or by transition - `0`)
 
 So now we know that tuples can give us the fundamental building block for numbers. So let's define some types:
 
@@ -103,10 +103,10 @@ type BuildTuple<N extends number, T extends Tuple = Zero> = T extends {
 
 Again this code my look a little scary to someone but it can be read as:
 
-- We take a number `N` and an accumulated value `T` (which by default is our `Zero`)
-- We check if the `length` property of `T` is exactly the desired number `N`
-- If it - then `T` is our tuple representation
-- If not - we recursively call `BuildTuple` much like a function with the new accumulated value being T with an additional `any`
+1. We take a number `N` and an accumulated value `T` (which by default is our `Zero`)
+2. We check if the `length` property of `T` is exactly the desired number `N`
+3. If it - then `T` is our tuple representation
+4. If not - we recursively call `BuildTuple` much like a function with the new accumulated value being T with an additional `any`
 
 Just to check that everything works as expected, let's apply `Length` on a type created from `BuildTuple`
 
@@ -127,7 +127,7 @@ type AboveLimit = BuildTuple<47>; // this one results in "Type instantiation is 
 
 Now that we have our concept of `Zero` and can create any other number as a tuple representation, how do we apply arithmetics.
 
-1. Addition
+### Addition
 
 Let's start with defining `PlusOne`:
 
@@ -137,9 +137,9 @@ type PlusOne<N extends number> = Length<[...BuildTuple<N>, any]>;
 
 This is self explanatory:
 
-- Given a number `N` we create a tuple from it using `BuildTuple`
-- We then create another tuple, expanding the current tuple and adding one more type element (`any`).
-- Finally we use `Length` so that we go back to a number constant number type.
+1. Given a number `N` we create a tuple from it using `BuildTuple`
+2. We then create another tuple, expanding the current tuple and adding one more type element (`any`).
+3. Finally we use `Length` so that we go back to a number constant number type.
 
 As a result we have:
 
@@ -156,7 +156,7 @@ type Plus<A extends number, B extends number> = Length<
 type Twelve = Plus<4, 8>; // Twelve is of type 12
 ```
 
-2. Subtraction
+### Subtraction
 
 Doing the opposite we can define `MinusOne`:
 
@@ -170,11 +170,11 @@ type MinusOne<N extends number, T = BuildTuple<N>> = T extends Zero
 
 What we do here is the following:
 
-- Given a number `N` we create a tuple from it using `BuildTuple` and save it as `T`
-- We check if `T` is `Zero` and if so we return `Length<Zero>` (which is 0)
-- If not then, we check if `T` can be represented as a single type `any` and some values `Rest`
-- If we can, then `Lenth<Rest>` is the result of the subtraction (we have removed one element)
-- If not - then we have a `0`
+1. Given a number `N` we create a tuple from it using `BuildTuple` and save it as `T`
+2. We check if `T` is `Zero` and if so we return `Length<Zero>` (which is 0)
+3. If not then, we check if `T` can be represented as a single type `any` and some values `Rest`
+4. If we can, then `Lenth<Rest>` is the result of the subtraction (we have removed one element)
+5. If not - then we have a `0`
 
 As a result we have:
 
@@ -215,11 +215,11 @@ type GreaterThan<
 
 Let's go line by line:
 
-- We create a tuple from B and check if it is `Zero`
-- If it is then we create one from `A` as well and check it agains `Zero`.
-- If it is then `A` and `B` are equal, hence we return `false`
-- If `A` isn't, then `A` is greater than `B` and we return `true`
-- If `B` is not `Zero` then we recursively call `GreaterThan` subtracting one from both `A` and `B`
+1. We create a tuple from B and check if it is `Zero`
+2. If it is then we create one from `A` as well and check it agains `Zero`.
+3. If it is then `A` and `B` are equal, hence we return `false`
+4. If `A` isn't, then `A` is greater than `B` and we return `true`
+5. If `B` is not `Zero` then we recursively call `GreaterThan` subtracting one from both `A` and `B`
 
 The results is as expeced:
 
@@ -301,10 +301,10 @@ So the "algorithm" actually works just fine!
 
 We did manage to implement an algorithm that uses types only to solve an Advent of Code level puzzle.
 
-- Is it useful? - No!
-- Is it something that you need to do in your life? - Probably no!
-- Was it fun? - For me, yes!
-- Was it worth it? - Yes!
+> Is it useful? - **No!**
+> Is it something that you need to do in your life? - **Probably no!**
+> Was it fun? - **For me, yes!**
+> Was it worth it? - **YES!**
 
 ## Takeaway points
 
