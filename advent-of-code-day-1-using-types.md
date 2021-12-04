@@ -195,7 +195,7 @@ type Minus<
   ? Length<Rest>
   : Length<Zero>;
 
-type Seven = Plus<13, 6>; // Seven is of type 7
+type Seven = Minus<13, 6>; // Seven is of type 7
 ```
 
 ## Comparisons
@@ -264,15 +264,55 @@ type NumberOfIncreases<
   Accumulator extends number = Length<Zero>
 > = Input extends []
   ? Accumulator
-  : Input extends [infer Curr, ...any]
-  ? Curr extends number
-    ? Previous extends number
-      ? GreaterThan<Curr, Previous> extends true
-        ? NumberOfIncreases<RestFromArray<Input>, Curr, PlusOne<Accumulator>>
-        : NumberOfIncreases<RestFromArray<Input>, Curr, Accumulator>
-      : NumberOfIncreases<RestFromArray<Input>, Curr, Accumulator>
-    : Accumulator
+  : Input extends [infer Curr, ...infer Rest]
+  ? Previous extends number
+    ? GreaterThan<Curr, Previous> extends true
+      ? NumberOfIncreases<Rest, Curr, PlusOne<Accumulator>>
+      : NumberOfIncreases<Rest, Curr, Accumulator>
+    : NumberOfIncreases<Rest, Curr, Accumulator>
   : Accumulator;
+```
+
+Now sadly the direct "translation" does not work. Typescript infers `Curr` and `Rest` as `unknown` instead of as `number`. To fix this we could:
+
+1. Use `Input[0]` instead of `Curr` to have proper inference
+2. Define a type `RestFromArray` that would infer them properly
+
+Now for `RestFromArray`, the intuitive solution would be:
+
+```ts
+type RestFromArray<T extends Tuple> = T extends [any, ...infer Rest]
+  ? Rest
+  : [];
+```
+
+It would work in cases of `RestFromArray<[1, 2, 3]>` and would result in `[2, 3]`. But in more complex cases as in the `NumberOfIncreases` type definition `RestFromArray<Input>` would once again result in `unknown[]`.
+
+To fix this we can use a trick, that uses function arguments, since they are represented by actual tuples:
+
+```ts
+type RestFromArray<T extends Tuple> = ((...args: T) => void) extends (
+  first: any,
+  ...rest: infer Rest
+) => void
+  ? Rest
+  : [];
+```
+
+Now the final implementation would then look like this:
+
+```ts
+type NumberOfIncreases<
+  Input extends number[],
+  Previous extends number | null = null,
+  Accumulator extends number = Length<Zero>
+> = Input extends []
+  ? Accumulator
+  : Previous extends number
+  ? GreaterThan<Input[0], Previous> extends true
+    ? NumberOfIncreases<RestFromArray<Input>, Input[0], PlusOne<Accumulator>>
+    : NumberOfIncreases<RestFromArray<Input>, Input[0], Accumulator>
+  : NumberOfIncreases<RestFromArray<Input>, Input[0], Accumulator>;
 ```
 
 This is a very good example how actual logic can be written with types.
