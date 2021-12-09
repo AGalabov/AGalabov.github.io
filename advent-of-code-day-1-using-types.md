@@ -349,4 +349,6 @@ In the process of implementing the building blocks, arithmetics, comparisons and
 1. I found out some new capabilities of Typescript
 2. I reminded myself of some maths fundamentals
 3. I wrote my first and hopefully not last blog post
-4. I found myself a new hobby - solving programming puzzles using the type system only
+4. I found myself a new hobby
+
+You can find the full code and check out my progress with the other puzzles on [AGalabov/advent-of-code-2021/type-system](https://github.com/AGalabov/advent-of-code-2021/tree/master/type-system)
