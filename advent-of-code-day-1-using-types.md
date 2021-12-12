@@ -282,7 +282,7 @@ Now sadly the direct "translation" does not work entirely. Typescript infers `Cu
 1. Add a check like `Curr extends number`
 2. Use `Input[0]` instead of `Curr` to have proper inference
 
-We could however simplify the logic by extracting some of it. Let's extract a i`RestFromArray`:
+We could however simplify the logic by extracting some of it. Let's extract the logic behind getting the rest elements of an array:
 
 ```ts
 type RestFromArray<T extends Tuple> = T extends [any, ...infer Rest]
