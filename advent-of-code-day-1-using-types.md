@@ -26,9 +26,9 @@ input
 
 Then I went on and solved the other puzzle for the day and that was that. Or so I thought...
 
-## Typescript's Typesystem
+## Typescript's Type system
 
-The day after, me and a colleague started discussing the event. He mentioned that, knowing _Typescript_ is in fact _Turing compete_, it is fully possible to solve this puzzle using the typesystem only. At first I was confused, but then he explained his approach to me, but also that he didn't manage to finish it because of the depth limit TS enforces (as of TS 4.5 it is 1000). So that's when I decided it's game time!
+The day after, me and a colleague started discussing the event. He mentioned that, knowing _Typescript_ is in fact _Turing compete_, it is fully possible to solve this puzzle using the type system only. At first I was confused, but then he explained his approach to me, but also that he didn't manage to finish it because of the depth limit TS enforces (as of TS 4.5 it is 1000). So that's when I decided it's game time!
 
 # The solution
 
@@ -347,7 +347,7 @@ We did manage to implement an algorithm that uses types only to solve an Advent 
 In the process of implementing the building blocks, arithmetics, comparisons and the actual algorithm:
 
 1. I found out some new capabilities of Typescript
-2. I reminded myself of some maths fundamentals
+2. I reminded myself of some math fundamentals
 3. I wrote my first and hopefully not last blog post
 4. I found myself a new hobby
 
