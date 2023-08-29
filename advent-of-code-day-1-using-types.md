@@ -351,4 +351,4 @@ In the process of implementing the building blocks, arithmetics, comparisons and
 3. I wrote my first and hopefully not last blog post
 4. I found myself a new hobby
 
-You can find the full code and check out my progress with the other puzzles on [AGalabov/advent-of-code-2021/type-system](https://github.com/AGalabov/advent-of-code-2021/tree/master/type-system)
+You can find the full code and check out my progress with the other puzzles on [AGalabov/advent-of-code-2021/type-system](https://github.com/AGalabov/advent-of-code/tree/master/2021/type-system)
